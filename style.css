@@ -22,6 +22,7 @@ CSS RESETS: JOSH CAMUE
     /* Default Font Styling */
     font-family: "Commissioner", sans-serif;
     font-size: 16px;
+    position: relative;
   }
   
   /* Improve media defaults */
@@ -407,6 +408,40 @@ About  Section
 Modal Section
 */
 
+/*
+Modal Section
+*/
+
+.modal {
+  position: fixed; /* stays centered on scroll */
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; 
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 20;
+  overflow-y: auto; 
+  /* padding: 2rem 1rem; */
+}
+
+/* When modal is active (opened) */
+.modal.active {
+  display: flex;
+}
+
+.modal .card-container{
+  width: 100%;
+  max-width: 540px;
+  background-color: var(--color-bg);
+  border-radius: var(--border-radius);
+  margin: auto;
+  overflow: hidden;
+}
+
+
 .modal-header{
   display: flex;
   align-items: center;
@@ -532,6 +567,6 @@ Sucess Message
   padding: 0.85rem 1.5rem;
 }
 
-.success-message , .modal{
+.success-message {
   display: none;
 }
