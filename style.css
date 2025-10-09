@@ -81,6 +81,7 @@ CSS UTILITIES: REPEATING STYLES ARRANGE INTO ONE
 
 .container-card{
   width: 90%;
+  max-width: 780px;
   margin: 0 auto;
   background-color: var(--color-bg);
   border-radius: var(--border-radius);
@@ -107,16 +108,21 @@ a{
 p{
   font-weight: 400;
   color: var(--color-para);
-  font-size: 0.87rem;
+  font-size: clamp(0.87rem, 0.8049rem + 0.3257vw, 1.1rem);
   line-height: 1.5;
 }
 
+h1{
+  font-size: clamp(1.35rem, 1.081rem + 1.3451vw, 2.3rem);
+}
+
 h2{
-  font-size: 1.25rem;
+  font-size: clamp(1.25rem, 1.0659rem + 0.9204vw, 1.9rem);
 }
 
 h3{
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 0.7084rem + 0.708vw, 1.35rem);
+  font-weight: 500;
 }
 
 
@@ -128,6 +134,7 @@ button{
   background: none;
   border: none;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .btn-primary{
@@ -135,6 +142,11 @@ button{
   color: var(--color-bg);
   padding: 1.1rem;
   border-radius: calc(var(--border-radius)*3);
+  transition: background-color 0.2s ease-in;
+}
+
+.btn-primary:hover{
+  background-color: var(--color-primary-dark);
 }
 
 .btn-disabled{
@@ -142,6 +154,34 @@ button{
   color: var(--color-bg);
   padding: 1.1rem;
   border-radius: calc(var(--border-radius)*3);
+}
+
+input[type='radio']{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.custom-radio--btn{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-primay-light);
+  /* background-color: var(--color-primay-light); */
+  border-radius: 50%;
+  position: relative;
+}
+
+input[type='radio']:checked + .custom-radio--btn::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--color-primay-light);
 }
 
 /*
@@ -162,6 +202,7 @@ header{
   position: relative;
   width: 90%;
   margin: 0 auto;
+  max-width: 1160px;
 }
 
 .nav-links {
@@ -215,11 +256,12 @@ Header Background
 */
 
 .header-hero--bg {
-  background: url('images/image-hero-mobile.jpg') no-repeat top center;
-  background-size: contain; /* ensures the whole image is visible */
-  background-position: top center; /* aligns the image to the top */
-  background-repeat: no-repeat; /* prevents repeating */
-  min-height: 24rem; /* adjust to fit your layout needs */
+  background-image: url('images/image-hero-mobile.jpg'),
+                    linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  background-size: cover; 
+  background-position: top center; 
+  background-repeat: no-repeat; 
+  min-height: 24rem; 
 }
 
 
@@ -232,9 +274,7 @@ Hero Section
   margin-bottom: 4rem;
 }
 
-.hero h1{
-  font-size: 1.35rem;
-}
+
 
 .hero .container-card{
   padding: 0;
@@ -250,8 +290,8 @@ Hero Section
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 1.1rem;
-  padding-inline: 1.5rem;
+  gap: clamp(1.063rem, calc(0.877rem + 0.926vw), 1.688rem);
+  padding-inline: clamp(1.5rem, calc(1.204rem + 1.481vw), 2.5rem);
 }
 
 .hero .hero-card::before {
@@ -347,7 +387,6 @@ About  Section
 
 .about-card--header{
   display: flex;
-  /* align-items: center; */
   flex-direction: column;
   gap: 0.55rem;
 }
@@ -371,7 +410,7 @@ About  Section
 }
 
 .about-card--info{
-  margin-block: 0.55rem;
+  margin-block: clamp(0.563rem, calc(-0.012rem + 2.87vw), 2.5rem);
 }
 
 .card-slots{
@@ -413,23 +452,22 @@ Modal Section
 */
 
 .modal {
-  position: fixed; /* stays centered on scroll */
-  inset: 0;
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: none; 
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   z-index: 20;
   overflow-y: auto; 
-  /* padding: 2rem 1rem; */
+  padding-block: 2rem;
 }
 
 /* When modal is active (opened) */
 .modal.active {
-  display: flex;
+  display: block;
 }
 
 .modal .card-container{
@@ -468,6 +506,10 @@ Modal Section
   border: 1px solid var(--color-line);
 }
 
+.modal-card.active{
+  border: 1px solid var(--color-primay-light);
+}
+
 .modal-card--header{
   display: flex;
   justify-content: flex-start;
@@ -501,7 +543,15 @@ Modal Section
 .modal-select-heading{
   margin-block: 0.45rem;
 }
+
 .modal-select{
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  transition: all 0.3s ease;
+}
+
+.modal-select.acitve{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -509,6 +559,9 @@ Modal Section
   padding-block-start: 1.5rem;
   margin-block-start: 1.5rem;
   border-top: 1px solid var(--color-line);
+  opacity: 1;
+  pointer-events: auto;
+  height: 100%;
 }
 
 .modal-pledge{
@@ -533,6 +586,11 @@ Modal Section
   font-size: 1rem;
 }
 
+.modal-pledge input:focus{
+  outline: 2px solid var(--color-primay-light);
+  border: none;
+}
+
 .modal-pledge button{
   padding: 0.75rem 1.1rem;
   border-radius: calc(var(--border-radius)*3);
@@ -553,20 +611,164 @@ Modal Section
 Sucess Message 
 */
 
-
-.success-message .container-card{
-  display: flex;
-  flex-direction: column;
+/* Overlay */
+.success-message{
+  position: fixed;
+  inset: 0;                        /* replace top/left/transform */
+  display: flex;                   /* center the dialog */
   align-items: center;
   justify-content: center;
+  padding: 1.5rem;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 30;
   text-align: center;
-  gap: 1.5rem;
+  /* visibility toggle */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  /* REMOVE the duplicate height:0; line */
 }
+
+/* Active (visible) */
+.success-message.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dialog card size */
+.success-message .container-card{
+  width: 100%;
+  max-width: 420px;                /* or whatever you like */
+  margin: 0;    
+  display: flex;   
+  flex-direction: column;                /* center the dialog */
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;                   /* flex centers it */
+}
+
 
 .btn-success-message{
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.2rem;
 }
 
-.success-message {
-  display: none;
+
+
+
+/* Media Queries */
+@media (min-width: 768px) {
+  /*
+  Desktop Navigation 
+  */
+  
+  .nav-links {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    display: flex !important; 
+    gap: 1.5rem;
+
+  }
+ 
+  .nav-links li {
+    min-width: 0;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .nav-links li a{
+    color: var(--color-bg);
+  }
+
+  header button {
+    display: none; 
+  }
+
+
+
+  /*
+  Hero Section
+  */
+
+  .header-hero--bg {
+    background: url('images/image-hero-desktop.jpg'),
+    linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+    background-size: cover; /* ensures the whole image is visible */
+    background-position: top center; /* aligns the image to the top */
+    background-repeat: no-repeat;
+  }
+  
+  .hero{
+    margin-top: 190px;
+    margin-bottom: 4rem;
+  }
+  
+
+  
+.budget-details{
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-block-end: 1rem;
+  gap: clamp(2.5rem, calc(2.056rem + 2.222vw), 4rem);
+}
+
+.budget-total{
+  align-items: start;
+  border-top: 0;
+  border-left: 2px solid var(--color-line);
+  padding-block-start: 0;
+  padding-inline-start: 2.1rem;
+}
+
+.budget-total:first-of-type{
+  border-left: 0;
+  padding-inline-start: 0;
+}
+
+.progress-bar{
+  margin-top: 2.5rem;
+}
+
+.progress-bar--progress{
+  width: 80%;
+}
+
+.about-card--header{
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.about-card--footer{
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-select.acitve{
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-pledge{
+  width: auto;
+  margin-block-start: 0;
+}
+
+.modal-card--main{
+  flex-direction: row;
+  justify-content: center;
+  gap: clamp(0.875rem, calc(0.579rem + 1.481vw), 1.875rem);
+}
+
 }
